@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 
+import com.Helper;
 import com.beans.SalesInvoice;
 import com.dao.SalesInvoiceDao;
 import com.toedter.calendar.JDateChooser;
@@ -282,43 +283,14 @@ public class salesinvoice extends JFrame {
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Tax Invoice", "GST Invoice", "Proforma Invoice"}));
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"", null, null, null, null, null, null, null, null, null, "", null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"S.N", "Product", "HSN Code", "Qty", "Per", "Rate", "Total", "SGST %", "SGST Amt", "CGST %", "CGST Amt", "GRAND TOTAL"
-			}
-		));
+		try
+		{
+			table.setModel(Helper.buildTableModel(new SalesInvoiceDao().getInvoiceAll()));	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		table.getColumnModel().getColumn(0).setPreferredWidth(32);
 		table.getColumnModel().getColumn(1).setPreferredWidth(165);
 		table.getColumnModel().getColumn(2).setPreferredWidth(66);
@@ -376,7 +348,7 @@ public class salesinvoice extends JFrame {
 		contentPane.add(btnCancel);
 		contentPane.add(textField_16);
 		
-				contentPane.add(textField_10);
+		contentPane.add(textField_10);
 		textField_10.setColumns(10);
 		
 		textField_3 = new JTextField();

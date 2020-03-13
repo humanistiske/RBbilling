@@ -130,37 +130,35 @@ public class SalesInvoiceDao
 		return s;
 	}
 
-	public  List<SalesInvoice> getInvoiceAll(final int i) 
+	public ResultSet getInvoiceAll() 
 	{
-		List<SalesInvoice> list=new ArrayList();
+		ResultSet rs = null;
 		String query = "select * from sales_invoice";
 		Connection con = DbDao.getConnection();
 		SalesInvoice s = new SalesInvoice();
 		try
 		{
 			PreparedStatement pre = con.prepareStatement(query);
-			pre.setInt(1, i);
-			ResultSet rs = pre.executeQuery(query);
+			rs = pre.executeQuery(query);
 			while(rs.next())
 			{
-				s.setCust_name(rs.getString(1));
-				s.setCust_address(rs.getString(2));
-				s.setParty_gst(rs.getString(3));
-				s.setDispatch(rs.getString(4));
-				s.setState_code(rs.getString(5));
-				s.setDel_name(rs.getString(6));
-				s.setDel_address(rs.getString(7));
-				s.setOrder_no(rs.getInt(8));
-				s.setChallan_no(rs.getInt(9));
-				s.setInvoice_no(i);
-				list.add(s);
+				s.setInvoice_no(Integer.parseInt(rs.getString(1)));
+				s.setCust_name(rs.getString(2));
+				s.setCust_address(rs.getString(3));
+				s.setParty_gst(rs.getString(4));
+				s.setDispatch(rs.getString(5));
+				s.setState_code(rs.getString(6));
+				s.setDel_name(rs.getString(7));
+				s.setDel_address(rs.getString(8));
+				s.setOrder_no(rs.getInt(9));
+				s.setChallan_no(rs.getInt(10));
 			}
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
 		}
-		return list;
+		return rs;
 	}
 	
 	public int delete(int s)
